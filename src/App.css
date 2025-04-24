@@ -1,0 +1,124 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* === Navigation Bar Styles === */
+
+.app-nav {
+  background-color: #333;
+  padding: 10px 0;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.app-nav ul {
+  list-style: none;
+  padding: 0 10px; /* Add slight horizontal padding for smaller screens */
+  margin: 0 auto;  /* Center the ul container itself */
+  max-width: 1200px; /* Optional: constrain max width on very large screens */
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap; /* Allow wrapping on medium screens */
+  gap: 5px; /* Use gap for spacing between wrapped items */
+}
+
+.app-nav li {
+  /* Remove margin, rely on gap in ul and padding in a */
+  margin: 0;
+}
+
+.app-nav a {
+  color: white;
+  text-decoration: none;
+  padding: 10px 15px; /* Slightly increase padding for better touch targets */
+  border-radius: 4px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  font-weight: bold;
+  font-size: 1rem;
+  display: inline-block; /* Important for padding and wrapping */
+  white-space: nowrap; /* Prevent text from breaking onto multiple lines */
+}
+
+.app-nav a:hover,
+.app-nav a:focus {
+  background-color: #555;
+  color: #fff;
+  outline: none;
+}
+
+/* === Responsive Styles for Navigation (Tablets and Phones) === */
+
+/* Target tablets (portrait) and phones */
+@media (max-width: 767px) { /* Common breakpoint for tablets/phones */
+  .app-nav ul {
+    flex-direction: column; /* Stack items vertically */
+    align-items: stretch;   /* Make items stretch to full width */
+    padding: 0;             /* Remove horizontal padding on ul */
+    gap: 2px;               /* Reduce gap for vertical layout */
+  }
+
+  .app-nav li {
+     /* No specific li styles needed here anymore */
+     /* width: 100%; /* Let items stretch naturally */
+     text-align: center; /* Center text within the link */
+  }
+
+  .app-nav a {
+    display: block; /* Make the link fill the list item horizontally */
+    padding: 12px 15px; /* Adjust padding for vertical layout */
+    width: 100%;     /* Ensure link takes full width */
+    box-sizing: border-box; /* Include padding in width calculation */
+    border-radius: 0; /* Optional: Remove border-radius for full-width items */
+  }
+
+  .app-nav a:hover,
+  .app-nav a:focus {
+     /* Ensure hover effect covers the full block */
+     background-color: #555;
+  }
+}
+
+/* Optional: Minor adjustments for very small phones if needed */
+/*
+@media (max-width: 480px) {
+  .app-nav a {
+    font-size: 0.95rem; // Slightly smaller font
+    padding: 10px 12px;
+  }
+}
+*/
