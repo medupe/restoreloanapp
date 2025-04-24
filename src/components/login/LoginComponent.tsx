@@ -1,6 +1,6 @@
 import React, { useState, FormEvent } from 'react';
 import './LoginComponent.css';
-import { BrowserRouter as  Route, Link } from 'react-router-dom';
+import {  Link } from 'react-router-dom';
 // Define the user data type
 interface UserData {
   username: string;
@@ -73,7 +73,7 @@ const LoginComponent: React.FC<LoginComponentProps> = ({ onLoginSuccess }) => {
       </form>
 
     </div>
-    <Link to="/register">do not have account register?</Link>
+    <Link to="/register">Do not have account register?</Link>
     </>
   );
 };

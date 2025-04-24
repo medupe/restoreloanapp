@@ -1,7 +1,7 @@
 
 import LoginComponent from './components/login/LoginComponent';
 import RegisterComponent from './components/register/RegisterComponent';
-import React, { useState } from 'react';
+import  { useState } from 'react';
 
 import './App.css'; // Your main app styles
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
