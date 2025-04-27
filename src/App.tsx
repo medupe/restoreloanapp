@@ -45,10 +45,10 @@ function App() {
 
   return (
     <> {/* Use React.Fragment shorthand */}
-      {/* Header can stay outside Router if it's always visible */}
-      <header className="app-header-static"> {/* Renamed to avoid conflict if needed */}
+      {/* Header can stay outside Router if it's always visible 
+      <header className="app-header-static"> 
         <h1>Restore Loans Application</h1>
-      </header>
+      </header>*/}
 
       <Router>
         <nav className="app-nav">
