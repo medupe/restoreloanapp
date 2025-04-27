@@ -1,7 +1,6 @@
 // c:\restoreloanapp\src\App.tsx
 import LoginComponent from './components/login/LoginComponent';
 import RegisterComponent from './components/register/RegisterComponent';
-// --- Import useState ---
 import React, { useState } from 'react';
 
 import './App.css'; // Your main app styles
