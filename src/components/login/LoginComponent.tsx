@@ -70,10 +70,15 @@ const LoginComponent: React.FC<LoginComponentProps> = ({ onLoginSuccess }) => {
         <button type="submit" className="login-button" disabled={isLoading}>
           {isLoading ? 'Logging in...' : 'Login'}
         </button>
+        
+       <div className="form-group">
+        <br></br>
+          <Link to="/register">do not have account register?</Link>
+        </div>
       </form>
 
     </div>
-    <Link to="/register">do not have account register?</Link>
+    
     </>
   );
 };

@@ -1,77 +1,84 @@
-.App {
-  text-align: center;
-}
+/* c:\restoreloanapp\src\App.css */
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+/* Keep existing styles for .App, .App-logo, etc. or remove if unused */
+/* ... (previous .App, .App-logo, .App-link styles) ... */
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
+/* --- Static Header Example (if you don't want the full height one) --- */
+.app-header-static {
   background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  padding: 15px 20px; /* Adjust padding */
   color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  text-align: center; /* Center title */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional shadow */
+  /* Remove height/flex properties if it's just a banner */
 }
 
 /* === Navigation Bar Styles === */
 
 .app-nav {
   background-color: #333;
-  padding: 10px 0;
-  margin-bottom: 20px;
+  padding: 10px 20px; /* Add horizontal padding */
+  /* margin-bottom: 20px; */ /* Remove bottom margin if main content handles spacing */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  position: relative; /* Needed for absolute positioning of mobile menu */
+  display: flex; /* Use flex to align items */
+  align-items: center; /* Vertically center items */
+  justify-content: center; /* Center links by default on desktop */
+  min-height: 50px; /* Ensure nav has some height */
 }
 
+/* --- Hamburger Button --- */
+.menu-toggle {
+  display: none; /* Hidden by default (on desktop) */
+  background: none;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  /* Style the lines */
+  position: absolute; /* Position relative to nav */
+  right: 20px; /* Position on the right */
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 110; /* Ensure it's above the menu */
+}
+
+.menu-toggle span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  margin: 5px 0;
+  transition: all 0.3s ease-in-out;
+}
+
+/* --- Desktop Navigation List --- */
 .app-nav ul {
   list-style: none;
-  padding: 0 10px; /* Add slight horizontal padding for smaller screens */
-  margin: 0 auto;  /* Center the ul container itself */
-  max-width: 1200px; /* Optional: constrain max width on very large screens */
-  display: flex;
+  padding: 0;
+  margin: 0;
+  display: flex; /* Keep flex for desktop */
   justify-content: center;
-  flex-wrap: wrap; /* Allow wrapping on medium screens */
-  gap: 5px; /* Use gap for spacing between wrapped items */
+  flex-wrap: wrap;
+  gap: 10px; /* Slightly larger gap maybe */
+  /* max-width: 1200px; */ /* Max width might not be needed if centered */
+  transition: transform 0.3s ease-in-out; /* Add transition for potential future animations */
 }
 
 .app-nav li {
-  /* Remove margin, rely on gap in ul and padding in a */
   margin: 0;
 }
 
 .app-nav a {
   color: white;
   text-decoration: none;
-  padding: 10px 15px; /* Slightly increase padding for better touch targets */
+  padding: 10px 15px;
   border-radius: 4px;
   transition: background-color 0.2s ease, color 0.2s ease;
   font-weight: bold;
   font-size: 1rem;
-  display: inline-block; /* Important for padding and wrapping */
-  white-space: nowrap; /* Prevent text from breaking onto multiple lines */
+  display: inline-block;
+  white-space: nowrap;
 }
 
 .app-nav a:hover,
@@ -81,44 +88,92 @@
   outline: none;
 }
 
-/* === Responsive Styles for Navigation (Tablets and Phones) === */
+/* === Responsive Styles (Mobile Menu) === */
 
-/* Target tablets (portrait) and phones */
-@media (max-width: 767px) { /* Common breakpoint for tablets/phones */
+@media (max-width: 767px) {
+  .app-nav {
+    justify-content: flex-end; /* Align toggle button to the right */
+  }
+
+  .menu-toggle {
+    display: block; /* Show hamburger on mobile */
+  }
+
+  /* Style the hamburger lines when menu is open (optional X shape) */
+  .menu-toggle[aria-expanded="true"] span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  .menu-toggle[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+  }
+  .menu-toggle[aria-expanded="true"] span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+
+
   .app-nav ul {
-    flex-direction: column; /* Stack items vertically */
-    align-items: stretch;   /* Make items stretch to full width */
-    padding: 0;             /* Remove horizontal padding on ul */
-    gap: 2px;               /* Reduce gap for vertical layout */
+    display: flex; /* Use flex for column layout */
+    flex-direction: column;
+    position: absolute;
+    top: 100%; /* Position below the nav bar */
+    left: 0;
+    right: 0; /* Take full width */
+    background-color: #444; /* Slightly different background */
+    padding: 10px 0; /* Add some vertical padding */
+    margin: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 100; /* Below toggle but above content */
+
+    /* --- Hide/Show Logic --- */
+    /* Use transform for smoother animation */
+    transform: translateY(-150%); /* Start off-screen */
+    opacity: 0;
+    visibility: hidden;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+
+    /* Remove desktop specific styles */
+    gap: 0;
+    flex-wrap: nowrap;
+    max-width: none;
+    align-items: stretch; /* Make list items stretch */
+  }
+
+  .app-nav ul.open {
+    /* Show the menu */
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
   }
 
   .app-nav li {
-     /* No specific li styles needed here anymore */
-     /* width: 100%; /* Let items stretch naturally */
-     text-align: center; /* Center text within the link */
+     text-align: center;
+     border-bottom: 1px solid #555; /* Separator lines */
+  }
+  .app-nav li:last-child {
+    border-bottom: none; /* Remove border from last item */
   }
 
   .app-nav a {
-    display: block; /* Make the link fill the list item horizontally */
-    padding: 12px 15px; /* Adjust padding for vertical layout */
-    width: 100%;     /* Ensure link takes full width */
-    box-sizing: border-box; /* Include padding in width calculation */
-    border-radius: 0; /* Optional: Remove border-radius for full-width items */
+    display: block; /* Make link fill the list item */
+    padding: 15px 20px; /* More padding for touch */
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 0; /* No radius for full width */
+    font-size: 1.1rem; /* Slightly larger font */
   }
 
   .app-nav a:hover,
   .app-nav a:focus {
-     /* Ensure hover effect covers the full block */
-     background-color: #555;
+     background-color: #5a5a5a; /* Adjust hover */
   }
 }
 
-/* Optional: Minor adjustments for very small phones if needed */
-/*
-@media (max-width: 480px) {
-  .app-nav a {
-    font-size: 0.95rem; // Slightly smaller font
-    padding: 10px 12px;
-  }
+/* === Main Content Area === */
+.main-content {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 20px auto 0 auto; /* Add top margin to clear nav */
 }
-*/
+
+/* ... (rest of your CSS, e.g., footer) ... */
+

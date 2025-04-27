@@ -1,0 +1,154 @@
+/* Styles for the Register Component */
+
+/* Container for the registration form */
+/* Note: Using 'login-container' as per the JSX. Consider renaming to 'register-container'
+   in both JSX and CSS for better clarity if styles diverge significantly from login. */
+   .login-container {
+    max-width: 450px; /* Adjust max-width as needed */
+    margin: 40px auto; /* Center horizontally, add top/bottom margin */
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e0e0e0;
+  }
+  
+  /* Heading style */
+  .login-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+    font-weight: 600;
+  }
+  
+  /* Styling for each label + input group */
+  .form-group {
+    margin-bottom: 20px; /* Spacing between form fields */
+  }
+  
+  /* Label styling */
+  .form-group label {
+    display: block; /* Ensure label is above the input */
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #555;
+    font-size: 0.95rem;
+  }
+  
+  /* Input field styling (text, password, email, etc.) */
+  .form-group input[type="text"],
+  .form-group input[type="password"],
+  .form-group input[type="email"] /* Add email if you change the type */ {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+  
+  /* Input field focus style */
+  .form-group input[type="text"]:focus,
+  .form-group input[type="password"]:focus,
+  .form-group input[type="email"]:focus,
+  .form-group select:focus { /* Include select focus */
+    border-color: #007bff; /* Highlight color on focus */
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+    outline: none; /* Remove default outline */
+  }
+  
+  /* Select dropdown styling */
+  /* Note: The JSX has 'form-group form-select' on the select.
+     It's better practice to have the div wrapper be 'form-group'
+     and style the select element directly or with just 'form-select'.
+     This CSS targets the select within .form-group. */
+  .form-group select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    background-color: #fff; /* Ensure background is white */
+    cursor: pointer;
+    /* Add custom dropdown arrow appearance if desired */
+    appearance: none; /* Remove default system appearance */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    /* Add a background image for the arrow */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007bff%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 10px 10px;
+    padding-right: 40px; /* Make space for the arrow */
+  }
+  
+  /* Style for the submit button */
+  /* Note: Using 'login-button' as per the JSX. Consider renaming to 'register-button'. */
+  .login-button {
+    display: block; /* Make button take full width */
+    width: 100%;
+    padding: 12px 20px;
+    margin-top: 10px; /* Add some space above the button */
+    background-color: #28a745; /* Green color for registration */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, opacity 0.2s ease-in-out;
+    text-align: center;
+  }
+  
+  /* Button hover effect */
+  .login-button:hover:not(:disabled) {
+    background-color: #218838; /* Darker green on hover */
+  }
+  
+  /* Button disabled state */
+  .login-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+  
+  /* Error message styling */
+  .error-message {
+    color: #dc3545; /* Red color for errors */
+    background-color: #f8d7da; /* Light red background */
+    border: 1px solid #f5c6cb;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 0.95rem;
+  }
+  
+  /* --- Optional: Responsive Adjustments --- */
+  @media (max-width: 500px) {
+    .login-container {
+      margin: 20px 15px; /* Reduce margin on smaller screens */
+      padding: 20px;
+    }
+  
+    .login-container h2 {
+      font-size: 1.5rem; /* Adjust heading size */
+    }
+  
+    .form-group input[type="text"],
+    .form-group input[type="password"],
+    .form-group input[type="email"],
+    .form-group select,
+    .login-button {
+      font-size: 1rem; /* Ensure consistent font size */
+      padding: 10px 12px; /* Slightly reduce padding */
+    }
+  
+    .form-group select {
+      padding-right: 35px; /* Adjust arrow padding */
+      background-position: right 12px center;
+    }
+  }
+  

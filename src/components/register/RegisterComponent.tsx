@@ -1,4 +1,5 @@
 import React, { useState, FormEvent } from 'react';
+import './RegisterComponent.css';
 
 import { registerUser, RegisterFormData } from './../../api/userService';
 
@@ -125,7 +126,7 @@ const LoginComponent: React.FC= () => {
         </div>
        
         <select
-          name="gender" className='form-group form-select'
+          name="gender" id='gender' className='form-group select'
         value={gender}
          onChange={(e) => setGender(e.target.value)}
           required
