@@ -78,11 +78,7 @@ const LoginComponent: React.FC<LoginComponentProps> = ({ onLoginSuccess }) => {
       </form>
 
     </div>
-<<<<<<< HEAD
     
-=======
-    <Link to="/register">Do not have account register?</Link>
->>>>>>> 1d13238a82de7afdd982c065c7004553087aec4f
     </>
   );
 };
