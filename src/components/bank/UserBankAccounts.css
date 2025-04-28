@@ -1,0 +1,132 @@
+/* src/components/UserBankAccounts.css */
+
+/* --- Container for the whole component --- */
+.bank-accounts-container {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+      Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    padding: 20px;
+    max-width: 700px; /* Adjust as needed */
+    margin: 20px auto; /* Center the container */
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* --- Title --- */
+  .bank-accounts-container h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+    color: #333;
+    font-size: 1.5em; /* Larger title */
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+    text-align: center; /* Center the title */
+  }
+  
+  /* --- List Styling --- */
+  .bank-accounts-list {
+    list-style-type: none; /* Remove default bullets */
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* --- Individual List Item (Bank Account) --- */
+  .bank-account-item {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 15px 20px; /* More padding */
+    margin-bottom: 15px;
+    transition: box-shadow 0.2s ease-in-out; /* Subtle hover effect */
+    line-height: 1.6; /* Improve readability */
+  }
+  
+  .bank-account-item:last-child {
+    margin-bottom: 0; /* No margin below the last item */
+  }
+  
+  .bank-account-item:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Highlight on hover */
+  }
+  
+  /* --- Bank Name (Strong element) --- */
+  .bank-account-item strong {
+    color: #0056b3; /* A distinct color for the bank name */
+    font-size: 1.1em;
+    display: block; /* Make it a block to take full width */
+    margin-bottom: 8px;
+  }
+  
+  /* --- Branch Info --- */
+  .branch-info {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 8px;
+  }
+  
+  /* --- Account Details (Holder, Number, Type) --- */
+  .account-detail {
+    font-size: 0.95em;
+    color: #444;
+    margin-bottom: 4px;
+  }
+  
+  .account-detail-label {
+    font-weight: 600; /* Slightly bolder labels */
+    color: #555;
+    min-width: 130px; /* Align values */
+    display: inline-block;
+  }
+  
+  .account-number-masked {
+    font-family: 'Courier New', Courier, monospace; /* Monospace for masked number */
+    color: #777;
+  }
+  
+  .account-type {
+    text-transform: capitalize; /* Capitalize 'savings' */
+    font-style: italic;
+  }
+  
+  
+  /* --- Loading/Error/No Data States --- */
+  .loading-message,
+  .error-message,
+  .no-data-message {
+    padding: 30px 20px;
+    text-align: center;
+    font-size: 1.1em;
+    color: #555;
+    background-color: #fff; /* Give them a background */
+    border: 1px dashed #ccc; /* Dashed border to indicate state */
+    border-radius: 6px;
+  }
+  
+  .error-message {
+    color: #d9534f; /* Red for errors */
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    font-weight: bold;
+  }
+  
+  .loading-message::before {
+    /* Optional: Add a simple spinner animation */
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 3px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-left-color: #555;
+    animation: spin 1s linear infinite;
+    margin-right: 10px;
+    vertical-align: middle;
+  }
+  
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  

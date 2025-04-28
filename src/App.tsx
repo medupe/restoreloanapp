@@ -6,6 +6,8 @@ import RegisterComponent from './components/register/RegisterComponent';
 import './App.css'; // Your main app styles
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import DashboardComponent from './components/dashboard/DashboardComponent';
+import UserBankAccounts from './components/bank/UserBankAccounts';
+import DocumentUpload from './components/document/DocumentUpload';
 
 // Define user data structure
 interface UserData {
@@ -71,7 +73,10 @@ function App() {
           <ul className={isMenuOpen ? 'open' : ''}>
             {/* Add onClick={closeMenu} to links */}
             <li><Link to="/" onClick={closeMenu}>Home</Link></li>
-            <li><Link to="/about" onClick={closeMenu}>About</Link></li>
+            <li><Link to="/about" onClick={closeMenu}>About Us</Link></li>
+            <li><Link to="/bank" onClick={closeMenu}>Bank</Link></li>
+            <li><Link to="/document" onClick={closeMenu}>document</Link></li>
+            {/* Only show Dashboard link if user is logged in */}
             <li><Link to="/dashboard" onClick={closeMenu}>Dashboard</Link></li>
             <li><Link to="/contact" onClick={closeMenu}>Contact</Link></li>
           </ul>
@@ -86,14 +91,18 @@ function App() {
               element={user ? <DashboardComponent userData={user} onLogout={handleLogout} /> : <h2>Please log in to view the dashboard.</h2>}
             />
             <Route path="/about" element={<h2>About Page</h2>} />
+            <Route path="/bank" element={<UserBankAccounts />} />
+            <Route path="/document" element={<DocumentUpload userId={0} onUploadSuccess={function (uploadedDocument): void {
+              throw new Error('Function not implemented.');
+            } } />} />
             <Route path="/contact" element={<h2>Contact Page</h2>} />
             <Route path="*" element={<h2>404 - Page Not Found</h2>} />
           </Routes>
         </main>
 
-        {/* <footer className="app-footer">
-          <p>&copy; {new Date().getFullYear()} Restore Loans Inc.</p>
-        </footer> */}
+        <footer className="dashboard-footer">
+        <p>&copy; {new Date().getFullYear()} Restore Loans. All rights reserved.</p>
+      </footer>
       </Router>
     </>
   );
