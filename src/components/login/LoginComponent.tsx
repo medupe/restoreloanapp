@@ -27,6 +27,8 @@ const LoginComponent: React.FC<LoginComponentProps> = ({ onLoginSuccess }) => {
     setTimeout(() => {
       if (username === 'admin' && password === 'password') {
         onLoginSuccess({ username });
+        setUsername('');
+        setPassword('');
       } else {
         setError('Invalid credentials');
       }
