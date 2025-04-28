@@ -24,13 +24,13 @@ interface ApiErrorResponse {
 // --- React Component ---
 const UserBankAccounts: React.FC = () => {
   const [bankAccounts, setBankAccounts] = useState<BankAccount[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  //const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchBankAccounts = async () => {
       const apiUrl = 'https://restoreloans-apis.onrender.com/api/user/bank-accounts'; // <-- EXAMPLE ENDPOINT - CHANGE THIS
-      setIsLoading(true);
+      //setIsLoading(true);
       setError(null);
 
       try {
@@ -64,7 +64,7 @@ const UserBankAccounts: React.FC = () => {
         setError(err instanceof Error ? err.message : 'An unexpected error occurred.');
         setBankAccounts([]);
       } finally {
-        setIsLoading(false);
+       // setIsLoading(false);
       }
     };
 
@@ -72,15 +72,16 @@ const UserBankAccounts: React.FC = () => {
   }, []);
 
   // --- Render Logic ---
+  // UNCOMMENTED the loading and error states
 //   if (isLoading) {
 //     // Use the CSS class for loading
 //     return <div className="loading-message">Loading bank accounts...</div>;
 //   }
 
-//   if (error) {
-//     // Use the CSS class for error
-//     return <div className="error-message">Error: {error}</div>;
-//   }
+  if (error) {
+    // Use the CSS class for error
+    return <div className="error-message">Error: {error}</div>;
+  }
 
   // --- Main Content ---
   return (
