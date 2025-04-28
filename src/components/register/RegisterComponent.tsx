@@ -191,7 +191,7 @@ const RegisterComponent: React.FC = () => {
 
   // State for loading and error feedback
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+
   const [successMessage, setSuccessMessage] = useState(''); // Optional: for success feedback
   const [fieldErrors, setFieldErrors] = useState<{
     username?: string;
@@ -210,14 +210,14 @@ const RegisterComponent: React.FC = () => {
     e.preventDefault();
   
     console.log("medupe molepo");
-    setError(''); // Clear previous errors
+  
     setSuccessMessage(''); // Clear previous success messages
     setIsLoading(true);
 
     // --- Validation ---
  
     if (!/^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/.test(username)) {
-      setError('Please enter a valid email address.');
+
       newErrors.username = 'Please enter a valid email.';
       setIsLoading(false);
     //  return;
@@ -225,47 +225,47 @@ const RegisterComponent: React.FC = () => {
   
     if (password.length < 8) {
       newErrors.confirmPassword = 'Password must be at least 8 characters long.';
-      setError('Password must be at least 8 characters long.');
+
       setIsLoading(false);
    //   return;
     }
   
     if (password !== confirmPassword) {
       newErrors.confirmPassword = 'Passwords do not match.';
-      setError('Passwords do not match.');
+ 
       setIsLoading(false);
    //   return;
     }
   
     if (!/^\d{10,15}$/.test(cellNumber)) {
       newErrors.cellNumber = 'Cell number must be 10 digits';
-      setError('Cell number must be between 10 to 15 digits.');
+     
       setIsLoading(false);
    //   return;
     }
   
     if (idNumber.length < 13 || idNumber.length > 13) {
       newErrors.idNumber = 'Enter valid Id number';
-      setError('ID Number must be at least 6 characters long.');
+
       setIsLoading(false);
     //  return;
     }
   
     if (!gender) {
       newErrors.gender = 'Gender is required.';
-      setError('Please select your gender.');
+   
       setIsLoading(false);
     //  return;
     }
   
     if (!firstName.trim()  ) {
-      setError('First Name and Last Name are required.');
+   
       newErrors.firstName = 'First Name is required.';
       setIsLoading(false);
      // return;
     }
     if (!lastName.trim() ) {
-     setError('Last Name and Last Name are required.');
+    
       newErrors.lastName = 'Last Name is required.';
       setIsLoading(false);
     //  return;
@@ -318,7 +318,7 @@ const RegisterComponent: React.FC = () => {
       setFieldErrors(newErrors);
       console.error('Registration failed:', err);
       // Use a more user-friendly error message if possible
-      setError(err.message || 'An error occurred during registration. Please try again.');
+     
       setIsLoading(false);
     } finally {
       setIsLoading(false); // Ensure loading state is turned off
