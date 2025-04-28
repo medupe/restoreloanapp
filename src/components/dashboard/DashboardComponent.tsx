@@ -94,9 +94,9 @@ const DashboardComponent: React.FC<DashboardComponentProps> = ({ userData, onLog
 
   return (
     <div className="dashboard-container">
+      <h1>Dashboard</h1>
       <header className="dashboard-header">
-        <h1>Restore Loans Dashboard</h1>
-        <div className="user-info">
+         <div className="user-info">
           <span>Welcome, {userData.username}!</span>
           <button onClick={onLogout} className="logout-button">Logout</button>
         </div>
@@ -149,7 +149,7 @@ const DashboardComponent: React.FC<DashboardComponentProps> = ({ userData, onLog
                 onClick={showMakePaymentView} // Use the specific function
                 // disabled={!selectedLoanId} // Example: Disable if no loan selected
               >
-               Make a Payment (for {mockLoan.id}) {/* Example text */}
+               Make a Payment{/* Example text */}
               </button>
 
               <button

@@ -86,7 +86,7 @@ const ApplyLoanForm: React.FC<ApplyLoanFormProps> = ({ onApplicationSuccess, onC
             required
             min="1"
             step="any"
-            placeholder="e.g., 10000"
+            placeholder="e.g., R10000"
             disabled={isLoading}
           />
         </div>
@@ -102,6 +102,21 @@ const ApplyLoanForm: React.FC<ApplyLoanFormProps> = ({ onApplicationSuccess, onC
             min="1"
             step="1"
             placeholder="e.g., 60"
+            disabled={isLoading}
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="loanTerm">Payable Loan with Interest:</label>
+          <input
+            type="number"
+            id="loanTerm"
+            value={loanTerm}
+            onChange={(e) => setLoanTerm(e.target.value)}
+            required
+            min="1"
+            step="1"
+            placeholder="e.g., R10060"
             disabled={isLoading}
           />
         </div>
