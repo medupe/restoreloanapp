@@ -64,14 +64,3 @@
     opacity: 0.7;
   }
   
-  .error-message {
-    color: #dc3545; /* Bootstrap danger color */
-    background-color: #f8d7da; /* Light red background */
-    border: 1px solid #f5c6cb; /* Reddish border */
-    padding: 10px 15px;
-    border-radius: 4px;
-    margin-bottom: 20px;
-    text-align: center;
-    font-size: 0.9rem;
-  }
-  

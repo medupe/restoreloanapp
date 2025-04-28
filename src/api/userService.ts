@@ -5,13 +5,15 @@
 
 // Structure of the data needed for registration
 export interface RegisterFormData {
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   email: string;
   password: string;
-  idNumber: string;
-  cellNumber: string;
+  id_number: string;
+  phone_number: string;
   gender: string;
+  is_active: true,
+  
 }
 
 // Expected structure of a successful registration response from your API
@@ -26,7 +28,7 @@ export interface RegisterSuccessResponse {
 // Expected structure of an error response from your API
 // Adjust based on what your API actually returns on failure
 export interface ApiErrorResponse {
-  message: string;
+  detail: string;
   // statusCode?: number; // Optional: if your API includes status code in body
   // errors?: Record<string, string>; // Optional: if API returns field-specific errors
 }
@@ -58,9 +60,10 @@ export const registerUser = async (data: RegisterFormData): Promise<RegisterSucc
           try {
               // Attempt to parse the error response body as JSON
               const errorData: ApiErrorResponse = await response.json();
+              
               // Use the message from the API's error response if available
-              if (errorData?.message) { // Optional chaining for safety
-                  errorMessage = errorData.message;
+              if (errorData?.detail) { // Optional chaining for safety
+                  errorMessage = errorData.detail;
               }
           } catch (jsonError) {
               // If the error response wasn't valid JSON, stick with the status text
