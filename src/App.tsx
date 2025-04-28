@@ -92,7 +92,7 @@ function App() {
             />
             <Route path="/about" element={<h2>About Page</h2>} />
             <Route path="/bank" element={<UserBankAccounts />} />
-            <Route path="/document" element={<DocumentUpload userId={0} onUploadSuccess={function (uploadedDocument): void {
+            <Route path="/document" element={<DocumentUpload userId={0} onUploadSuccess={function (): void {
               throw new Error('Function not implemented.');
             } } />} />
             <Route path="/contact" element={<h2>Contact Page</h2>} />
@@ -109,4 +109,3 @@ function App() {
 }
 
 export default App;
-
