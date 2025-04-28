@@ -99,7 +99,7 @@ const MakePaymentForm: React.FC<MakePaymentFormProps> = ({
         </div>
 
         {/* Optional: Add fields for payment method if needed */}
-        {/*
+    
         <div className="form-group">
           <label htmlFor="paymentMethod">Payment Method:</label>
           <select id="paymentMethod" disabled={isLoading}>
@@ -107,7 +107,55 @@ const MakePaymentForm: React.FC<MakePaymentFormProps> = ({
             <option value="card">Credit/Debit Card</option>
           </select>
         </div>
-        */}
+        <div className="form-group">
+          <label htmlFor="paymentAmount">CardNo:</label>
+          <input
+            type="number"
+            id="cardNo"
+            value={paymentAmount}
+            onChange={(e) => setPaymentAmount(e.target.value)}
+            required
+            min="0.01" // Minimum payment amount
+            step="0.01" // Allow cents
+            placeholder="1234567890123"
+            disabled={isLoading}
+            aria-describedby={error ? 'payment-error' : undefined} // Accessibility
+          />
+          {error && <span id="payment-error" className="visually-hidden">{error}</span>} {/* For screen readers */}
+        </div>
+        <div className="form-group">
+          <label htmlFor="paymentAmount">Expiry Date:</label>
+          <input
+            type="number"
+            id="cardNo"
+            value={paymentAmount}
+            onChange={(e) => setPaymentAmount(e.target.value)}
+            required
+            min="0.01" // Minimum payment amount
+            step="0.01" // Allow cents
+            placeholder="1234567890123"
+            disabled={isLoading}
+            aria-describedby={error ? 'payment-error' : undefined} // Accessibility
+          />
+          {error && <span id="payment-error" className="visually-hidden">{error}</span>} {/* For screen readers */}
+        </div>
+        <div className="form-group">
+          <label htmlFor="paymentAmount">Security Code:</label>
+          <input
+            type="number"
+            id="cardNo"
+            value={paymentAmount}
+            onChange={(e) => setPaymentAmount(e.target.value)}
+            required
+            min="0.01" // Minimum payment amount
+            step="0.01" // Allow cents
+            placeholder="1234567890123"
+            disabled={isLoading}
+            aria-describedby={error ? 'payment-error' : undefined} // Accessibility
+          />
+          {error && <span id="payment-error" className="visually-hidden">{error}</span>} {/* For screen readers */}
+        </div>
+       
 
         <div className="form-actions">
           <button type="submit" className="submit-button" disabled={isLoading}>
