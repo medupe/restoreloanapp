@@ -8,22 +8,16 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import DashboardComponent from './components/dashboard/DashboardComponent';
 import UserBankAccounts from './components/bank/UserBankAccounts';
 import DocumentUpload from './components/document/DocumentUpload';
+import { User } from './interface/interfaces';
 
-// Define user data structure
-interface UserData {
-  username: string;
-  // Add more fields if needed
-}
+
 
 function App() {
+
   // --- State for mobile menu visibility ---
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const handleLoginSuccess = (userData: UserData) => {
-    console.log('Login successful in App component!', userData);
-    alert(`Welcome back, ${userData.username}!`);
-    // TODO: Add actual state update or redirection logic here
-  };
+
 
   const handleLogout = () => {
     alert('Logging out...');
@@ -31,10 +25,15 @@ function App() {
   };
 
   // Example user data - replace with actual logged-in user state
-  const [user] = useState<UserData | null>({ // Use UserData | null for better type safety
-    username: 'John Doe',
-  });
+  const [user,setUsername] = useState<User | null>();
+  const handleLoginSuccess = (userData: User) => {
+    console.log('Login successful in App component!', userData);
+    setUsername(userData);
+ //   alert('Logging out...');
 
+ 
+
+  };
   // --- Function to toggle the menu ---
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -88,7 +87,7 @@ function App() {
             <Route path="/register" element={<RegisterComponent />} />
             <Route
               path="/dashboard"
-              element={user ? <DashboardComponent userData={user} onLogout={handleLogout} /> : <h2>Please log in to view the dashboard.</h2>}
+              element={user ? <DashboardComponent userData={{user}} onLogout={handleLogout} /> : <h2>Please log in to view the dashboard.</h2>}
             />
             <Route path="/about" element={<h2>About Page</h2>} />
             <Route path="/bank" element={<UserBankAccounts />} />

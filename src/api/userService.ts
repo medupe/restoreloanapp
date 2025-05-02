@@ -1,9 +1,6 @@
-// src/api/userService.ts
-// Removed axios import if it's not used elsewhere in this file
+import { ApiErrorResponse, User } from "../interface/interfaces";
 
-// --- Interfaces ---
 
-// Structure of the data needed for registration
 export interface RegisterFormData {
   first_name: string;
   last_name: string;
@@ -15,35 +12,31 @@ export interface RegisterFormData {
   is_active: true,
   
 }
-
-// Expected structure of a successful registration response from your API
-// Adjust based on what your API actually returns
+export interface LoginFormData {
+  username: string;
+  password: string;
+  grant_type?: string;
+  client_id?: string;
+  client_secret?: string;
+  scope?: string;
+  
+}
 export interface RegisterSuccessResponse {
   message: string;
-  // Add other fields if applicable, e.g., userId, token
-  // userId?: number;
-  // token?: string;
+
+}
+export interface LoginSuccessResponse {
+  access_token: string;
+  token_type: string;
+  user: User;
 }
 
-// Expected structure of an error response from your API
-// Adjust based on what your API actually returns on failure
-export interface ApiErrorResponse {
-  detail: string;
-  // statusCode?: number; // Optional: if your API includes status code in body
-  // errors?: Record<string, string>; // Optional: if API returns field-specific errors
-}
 
-// --- API Function ---
 
-/**
-* Registers a new user via the API using fetch.
-* @param data - The user registration data conforming to RegisterFormData.
-* @returns A promise that resolves with the success response data (RegisterSuccessResponse).
-* @throws An error with a detailed message if the registration fails or a network error occurs.
-*/
+
+
 export const registerUser = async (data: RegisterFormData): Promise<RegisterSuccessResponse> => {
-  const apiUrl = 'https://restoreloans-apis.onrender.com/auth/register';
-
+  const apiUrl = `${import.meta.env.REACT_APP_API_URL}/auth/register`;
   try {
       const response = await fetch(apiUrl, {
           method: 'POST',
@@ -91,18 +84,65 @@ export const registerUser = async (data: RegisterFormData): Promise<RegisterSucc
 };
 
 // Example of how another service function might look (e.g., login)
-/*
-export interface LoginFormData {
-  email: string;
-  password: string;
-}
 
-export interface LoginSuccessResponse {
-  token: string;
-  user: { id: number; email: string; firstName: string; };
-}
+
+
+
 
 export const loginUser = async (data: LoginFormData): Promise<LoginSuccessResponse> => {
-  // ... similar fetch logic for the login endpoint ...
+  const apiUrl = `${import.meta.env.VITE_API_URL}/auth/login`;
+  try {
+
+    const body = new URLSearchParams();
+    body.append('grant_type', 'password');
+    body.append('username', data.username);
+    body.append('password', data.password);
+    body.append('scope', '');
+    body.append('client_id', '');
+    body.append('client_secret', '');
+
+      const response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'Accept': 'application/json', // Good practice to include Accept header
+          },
+          body: body.toString(),
+      });
+
+      // Check if the response status code indicates success (2xx range)
+      if (!response.ok) {
+          let errorMessage = `Login failed: ${response.status} ${response.statusText}`; // Slightly clearer default message
+          try {
+              // Attempt to parse the error response body as JSON
+              const errorData: ApiErrorResponse = await response.json();
+              
+              // Use the message from the API's error response if available
+              if (errorData?.detail) { // Optional chaining for safety
+                  errorMessage = errorData.detail;
+              }
+          } catch (jsonError) {
+              // If the error response wasn't valid JSON, stick with the status text
+              console.error("Failed to parse error response JSON:", jsonError);
+          }
+          // Throw an error that the calling component can catch
+          throw new Error(errorMessage);
+      }
+
+      // If response is OK, parse the success response body as JSON
+      const successData: LoginSuccessResponse = await response.json();
+      return successData;
+
+  } catch (error: any) {
+      console.error("Error during registration fetch:", error);
+
+      // If it's already an Error object (could be the one we threw, or a network error)
+      if (error instanceof Error) {
+           throw error; // Re-throw the existing error
+      } else {
+          // Handle unexpected error types (less common with fetch)
+          throw new Error('An unexpected error occurred during registration.');
+      }
+  }
 }
-*/
+
