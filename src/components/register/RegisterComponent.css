@@ -113,16 +113,20 @@
     cursor: not-allowed;
     opacity: 0.7;
   }
+  .input-error {
+    border-color: red;
+
+  }
   
+
   /* Error message styling */
   .error-message {
     color: #dc3545; /* Red color for errors */
-    background-color: #f8d7da; /* Light red background */
-    border: 1px solid #f5c6cb;
-    padding: 10px 15px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    text-align: center;
+
+
+ 
+    margin-bottom: 10px;
+
     font-size: 0.95rem;
   }
   

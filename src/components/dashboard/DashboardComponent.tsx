@@ -3,6 +3,7 @@ import ApplyLoanForm from '../loan/ApplyLoanForm';
 import StatementHistory from '../statement/StatementHistory';
 import MakePaymentForm from '../payment/MakePaymentForm'; // Make sure this path is correct
 import './DashboardComponent.css';
+import { User } from '../../interface/interfaces';
 
 // --- Mock Data for Statement History ---
 const mockStatements = [
@@ -21,7 +22,7 @@ const mockLoan = {
 
 
 interface DashboardComponentProps {
-  userData: { username: string } | null;
+  userData: { user: User } | null;
   onLogout: () => void;
 }
 
@@ -97,7 +98,7 @@ const DashboardComponent: React.FC<DashboardComponentProps> = ({ userData, onLog
       <h1>Dashboard</h1>
       <header className="dashboard-header">
          <div className="user-info">
-          <span>Welcome, {userData.username}!</span>
+          <span>Welcome, {userData.user.first_name} {userData.user.last_name}!</span>
           <button onClick={onLogout} className="logout-button">Logout</button>
         </div>
       </header>
