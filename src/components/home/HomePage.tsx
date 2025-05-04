@@ -1,57 +1,47 @@
-import React, { useState, useEffect, FormEvent } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './HomePage.css';
 
-const HomePage: React.FC = () => {
-    const [selectedAmount, setSelectedAmount] = useState<string>('');
-    const [selectedDuration, setSelectedDuration] = useState<string>('');
-    const [returnAmount, setReturnAmount] = useState<string>('');
+const HomePage = () => {
+    const [amount, setAmount] = useState('');
+    const [duration, setDuration] = useState('');
+    const [returnAmount, setReturnAmount] = useState('');
     const navigate = useNavigate();
 
-    const handleApplyClick = (e: FormEvent) => {
+    useEffect(() => {
+        if (amount && duration) {
+            const a = parseFloat(amount);
+            const d = parseInt(duration, 10);
+            const interest = (a * 0.1 * d).toFixed(2);
+            setReturnAmount(interest);
+        } else {
+            setReturnAmount('');
+        }
+    }, [amount, duration]);
+
+    const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
-        console.log('Applying for loan with:', { selectedAmount, selectedDuration, returnAmount });
-        navigate('/apply');
+        console.log({ amount, duration, returnAmount });
+        navigate('/login');
     };
 
     const handleSlideChange = (direction: number) => {
-        const slider = document.querySelector('.slider') as HTMLElement;
+        const slider = document.querySelector('.slider');
         if (!slider) return;
 
         const slides = slider.querySelectorAll('.slide');
-        const currentSlide = slider.querySelector('.slide.active') as HTMLElement;
-        let currentIndex = Array.from(slides).indexOf(currentSlide);
+        const activeSlide = slider.querySelector('.slide.active');
+        let index = activeSlide ? Array.from(slides).indexOf(activeSlide) : -1;
 
-        if (currentIndex === -1) {
-            currentIndex = 0;
-        }
-
-        if (currentSlide) {
-            currentSlide.classList.remove('active');
-        }
-
-        const newIndex = (currentIndex + direction + slides.length) % slides.length;
+        if (index >= 0) slides[index].classList.remove('active');
+        const newIndex = (index + direction + slides.length) % slides.length;
         slides[newIndex].classList.add('active');
     };
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            handleSlideChange(1); // Move to the next slide
-        }, 5000); // Change slide every 5 seconds
-
-        return () => clearInterval(interval); // Cleanup interval on component unmount
+        const interval = setInterval(() => handleSlideChange(1), 5000);
+        return () => clearInterval(interval);
     }, []);
-
-    useEffect(() => {
-        if (selectedAmount && selectedDuration) {
-            const amount = parseFloat(selectedAmount);
-            const duration = parseInt(selectedDuration, 10);
-            const calculatedReturnAmount = (amount * 0.1 * duration).toFixed(2);
-            setReturnAmount(calculatedReturnAmount);
-        } else {
-            setReturnAmount('');
-        }
-    }, [selectedAmount, selectedDuration]);
 
     return (
         <div className="home-container">
@@ -71,63 +61,56 @@ const HomePage: React.FC = () => {
                     </div>
                 </div>
                 <div className="slider-controls">
-                    <button className="prev-slide" aria-label="Previous Slide" onClick={() => handleSlideChange(-1)}>❮</button>
-                    <button className="next-slide" aria-label="Next Slide" onClick={() => handleSlideChange(1)}>❯</button>
+                    <button onClick={() => handleSlideChange(-1)}>❮</button>
+                    <button onClick={() => handleSlideChange(1)}>❯</button>
                 </div>
             </div>
 
-            <br/>
-            <h3>Building a Brighter financial Future & Good Support</h3>
-            <p>Find the best loan option for your needs.</p>
+            <section className="loan-calculator-section">
+                <h2>Quick Loan Calculator</h2>
+                <form className="loan-form" onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <label htmlFor="amount">Loan Amount</label>
+                        <input
+                            type="number"
+                            id="amount"
+                            value={amount}
+                            onChange={(e) => setAmount(e.target.value)}
+                            required
+                            placeholder="Enter amount"
+                        />
+                    </div>
 
-            <div className="loan-calculator-section">
-                <h2>Quick Loan Calculator / Application</h2>
-                <form onSubmit={handleApplyClick} className="search-box">
-                    <div className="select-form">
-                        <div className="input-itms">
-                            <label htmlFor="customAmount" className="sr-only">Enter Amount</label>
-                            <input
-                                type="number"
-                                id="customAmount"
-                                placeholder="Enter Amount"
-                                value={selectedAmount}
-                                onChange={(e) => setSelectedAmount(e.target.value)}
-                            />
-                        </div>
+                    <div className="form-group">
+                        <label htmlFor="duration">Duration (in days)</label>
+                        <select
+                            id="duration"
+                            value={duration}
+                            onChange={(e) => setDuration(e.target.value)}
+                            required
+                        >
+                            <option value="" disabled>Select Duration</option>
+                            <option value="7">1 Week</option>
+                            <option value="14">2 Weeks</option>
+                            <option value="21">3 Weeks</option>
+                            <option value="30">4 Weeks</option>
+                        </select>
                     </div>
-                    <div className="select-form">
-                        <div className="select-itms">
-                            <label htmlFor="selectDuration" className="sr-only">Duration Month</label>
-                            <select
-                                name="selectDuration"
-                                id="selectDuration"
-                                value={selectedDuration}
-                                onChange={(e) => setSelectedDuration(e.target.value)}
-                            >
-                                <option value="" disabled>Duration Month</option>
-                                <option value="7">1 Week</option>
-                                <option value="14">2 Weeks</option>
-                                <option value="21">3 Weeks</option>
-                                <option value="30">4 Weeks</option>
-                                
-                            </select>
-                        </div>
-                    </div>
-                    <div className="input-form">
-                        <label htmlFor="returnAmount" className="sr-only">Return Amount</label>
+
+                    <div className="form-group">
+                        <label htmlFor="returnAmount">Return Amount</label>
                         <input
                             type="text"
                             id="returnAmount"
-                            placeholder="Return Amount"
                             value={returnAmount}
                             readOnly
+                            placeholder="Return will be calculated"
                         />
                     </div>
-                    <div className="search-form">
-                        <button type="submit">Apply for Loan</button>
-                    </div>
+
+                    <button type="submit">Apply for Loan</button>
                 </form>
-            </div>
+            </section>
         </div>
     );
 };
