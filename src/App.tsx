@@ -29,14 +29,22 @@ function App() {
   // Example user data - replace with actual logged-in user state
 
   const [user,setUsername] = useState<User | null>();
-  const handleLoginSuccess = (userData: User) => {
-    console.log('Login successful in App component!', userData);
-    setUsername(userData);
-
-
- 
-
+const handleLoginSuccess = (userData:any) => {
+  console.log('Login successful in App component!', userData);
+  const mappedUser: User = {
+    id: userData.id,
+    first_name: userData.first_name,
+    last_name: userData.last_name,
+    email: userData.email,
+    phone_number: userData.phone_number,
+    id_number: '',
+    password: '',
+    created_at: '',
+    gender: '',
+    is_active: false
   };
+  setUsername(mappedUser);
+};
   // --- Function to toggle the menu ---
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
