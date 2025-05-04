@@ -28,6 +28,7 @@ const RegisterComponent: React.FC = () => {
     idNumber?: string;
     cellNumber?: string;
     gender?: string;
+    general?: string; // Added general property
   }>({});
   const newErrors: typeof fieldErrors = {};
 
@@ -46,14 +47,14 @@ const RegisterComponent: React.FC = () => {
 
      // --- Validation ---
      if (!username || !password || !confirmPassword || !firstName || !lastName || !cellNumber || !idNumber || !gender) {
-      setError('Please fill in all required fields.');
+      setFieldErrors({ ...fieldErrors, general: 'Please fill in all required fields.' });
       setIsLoading(false);
       return;
   }
 
   // --- Email Format Validation --- // Highlighted Change Start
   if (!emailRegex.test(username)) {
-    setError('Please enter a valid email address.');
+    setFieldErrors({ ...fieldErrors, username: 'Please enter a valid email address.' });
     setIsLoading(false);
     return; // Stop submission
   }
@@ -343,9 +344,7 @@ const RegisterComponent: React.FC = () => {
   );
 };
 
-// Updated export name
+
 export default RegisterComponent;
-function setError(arg0: string) {
-  throw new Error('Function not implemented.');
-}
+
 

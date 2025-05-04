@@ -1,104 +1,46 @@
 import React, { useState, FormEvent } from 'react';
 import './LoginComponent.css';
 import {  Link } from 'react-router-dom';
-import { LoginFormData, loginUser } from '../../api/userService';
-import { User } from '../../interface/interfaces';
-import { useNavigate } from 'react-router-dom';
-interface LoginComponentProps {
-  onLoginSuccess: (userData: User) => void;
+// Define the user data type
+interface UserData {
+  username: string;
+  // add more fields if needed
 }
 
-const LoginComponent: React.FC<LoginComponentProps> =({onLoginSuccess}) => {
-  const navigate = useNavigate();
+// Define the props for LoginComponent
+interface LoginComponentProps {
+  onLoginSuccess: (userData: UserData) => void;
+}
+
+const LoginComponent: React.FC<LoginComponentProps> = ({ onLoginSuccess }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
-  
-     const [fieldErrors, setFieldErrors] = useState<{
-      username?: string;
-      password?: string;
-      grant_type?: string;
-      client_id?: string;
-      client_secret?: string;
-      scope?: string;
-      
-      }>({});
-        const [successMessage, setSuccessMessage] = useState('');
-  const newErrors: typeof fieldErrors = {};
   const handleSubmit = async (e: FormEvent) => {
-
     e.preventDefault();
     setIsLoading(true);
     setError('');
-    if (!/^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/.test(username)) {
 
-      newErrors.username = 'Please enter a valid email.';
+    // Fake login logic – replace with actual API call
+    setTimeout(() => {
+      if (username === 'admin' && password === 'password') {
+        onLoginSuccess({ username });
+        setUsername('');
+        setPassword('');
+      } else {
+        setError('Invalid credentials');
+      }
       setIsLoading(false);
-    //  return;
-    }
-  
-    if (password.length ==0) {
-      newErrors.password = 'Field is required.';
-
-      setIsLoading(false);
-   //   return;
-    }
-    if (Object.keys(newErrors).length > 0) {
-
-      setFieldErrors(newErrors);
-      setIsLoading(false);
-      return;
-    }
-    const loginData: LoginFormData = {
-      username: username,
-      password: password,
-      grant_type: 'password',
-      client_id: '',
-      client_secret: '',
-      scope: '',
-    };
-    setFieldErrors({});
-     try {
-          console.log('Submitting login data:', loginData);
-    
-          // Call the API function
-          const result = await loginUser(loginData);
-     
-          console.error('login success:', result.access_token);
-          localStorage.setItem('access_token', result.access_token); 
-          localStorage.setItem('user', JSON.stringify(result.user)); 
-          setSuccessMessage('Login successful! You can now log in.'); 
-  
-          setUsername('');
-       
-          setPassword('');
-      
-        //  navigate('/dashboard'); // ✅ Navigate to dashboard
-        onLoginSuccess(result.user);
-   
-        navigate('/dashboard', { state: { user: result.user } });
-          // Optionally redirect the user to the login page
-    
-        } catch (err: any) {
-          newErrors.username = 'Incorrect username or password.';
-  
-          setFieldErrors(newErrors);
-          console.error('Registration failed:', err);
-          // Use a more user-friendly error message if possible
-         
-          setIsLoading(false);
-        } finally {
-          setIsLoading(false); // Ensure loading state is turned off
-        }
+    }, 1000);
   };
 
   return (
     <>
     <div className="login-container">
       <h2>Login</h2>
-      <form onSubmit={handleSubmit} noValidate>
+      <form onSubmit={handleSubmit}>
         {error && <p className="error-message">{error}</p>}
 
         <div className="form-group">
@@ -113,9 +55,6 @@ const LoginComponent: React.FC<LoginComponentProps> =({onLoginSuccess}) => {
             autoComplete="username"
           />
         </div>
-        {fieldErrors.username && (
-            <p className="error-message">{fieldErrors.username}</p>
-        )}
 
         <div className="form-group">
           <label htmlFor="password">Password:</label>
@@ -129,9 +68,6 @@ const LoginComponent: React.FC<LoginComponentProps> =({onLoginSuccess}) => {
             autoComplete="current-password"
           />
         </div>
-        {fieldErrors.password && (
-            <p className="error-message">{fieldErrors.password}</p>
-        )}
 
         <button type="submit" className="login-button" disabled={isLoading}>
           {isLoading ? 'Logging in...' : 'Login'}
