@@ -345,3 +345,7 @@ const RegisterComponent: React.FC = () => {
 
 // Updated export name
 export default RegisterComponent;
+function setError(arg0: string) {
+  throw new Error('Function not implemented.');
+}
+
