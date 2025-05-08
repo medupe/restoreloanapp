@@ -1,4 +1,4 @@
-import { useState } from 'react'; // Import React and useState hook
+import { useState,useEffect } from 'react'; // Import React and useState hook
 import LoginComponent from './components/login/LoginComponent';
 import RegisterComponent from './components/register/RegisterComponent';
 
@@ -13,6 +13,8 @@ import { User } from './interface/interfaces';
 
 
 function App() {
+    const [user, setUser] = useState<User | null>(null);
+  
 
   // --- State for mobile menu visibility ---
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -25,15 +27,28 @@ function App() {
   };
 
   // Example user data - replace with actual logged-in user state
-  const [user,setUsername] = useState<User | null>();
+
   const handleLoginSuccess = (userData: User) => {
     console.log('Login successful in App component!', userData);
-    setUsername(userData);
+    //setUsername(userData);
  //   alert('Logging out...');
 
  
 
   };
+  useEffect(() => {
+    const userData = localStorage.getItem("user");
+
+    if (!userData) {
+  
+    }
+    else{
+         
+  const parsedUser: User = JSON.parse(userData);
+      console.log(parsedUser.last_name);
+     setUser(parsedUser);
+    }
+  }, []);
   // --- Function to toggle the menu ---
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -43,6 +58,12 @@ function App() {
   const closeMenu = () => {
     setIsMenuOpen(false);
   }
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("access_token");
+    if (storedUsername) {
+   
+    }
+  }, []); // [] = run once on mount
 
   return (
     <> {/* Use React.Fragment shorthand */}
@@ -76,7 +97,10 @@ function App() {
             <li><Link to="/bank" onClick={closeMenu}>Bank</Link></li>
             <li><Link to="/document" onClick={closeMenu}>document</Link></li>
             {/* Only show Dashboard link if user is logged in */}
-            <li><Link to="/dashboard" onClick={closeMenu}>Dashboard</Link></li>
+            <li><Link to="/dashboard"
+            
+            
+            onClick={closeMenu}>Dashboard</Link></li>
             <li><Link to="/contact" onClick={closeMenu}>Contact</Link></li>
           </ul>
         </nav>

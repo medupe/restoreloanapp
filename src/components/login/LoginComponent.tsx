@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, FormEvent,useEffect } from 'react';
 import './LoginComponent.css';
 import {  Link } from 'react-router-dom';
 import { LoginFormData, loginUser } from '../../api/userService';
@@ -14,6 +14,12 @@ const LoginComponent: React.FC<LoginComponentProps> =({onLoginSuccess}) => {
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("user");
+    if (storedUsername) {
+    navigate('/dashboard');
+    }
+  }, []);
 
   
      const [fieldErrors, setFieldErrors] = useState<{
@@ -78,7 +84,7 @@ const LoginComponent: React.FC<LoginComponentProps> =({onLoginSuccess}) => {
         //  navigate('/dashboard'); // ✅ Navigate to dashboard
         onLoginSuccess(result.user);
    
-        navigate('/dashboard', { state: { user: result.user } });
+        navigate('/dashboard');
           // Optionally redirect the user to the login page
     
         } catch (err: any) {
