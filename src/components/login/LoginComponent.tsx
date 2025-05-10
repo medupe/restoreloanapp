@@ -31,6 +31,7 @@ const LoginComponent: React.FC<LoginComponentProps> =({onLoginSuccess}) => {
       scope?: string;
       
       }>({});
+        const [successMessage, setSuccessMessage] = useState('');
   const newErrors: typeof fieldErrors = {};
   const handleSubmit = async (e: FormEvent) => {
 
@@ -75,6 +76,7 @@ const LoginComponent: React.FC<LoginComponentProps> =({onLoginSuccess}) => {
           localStorage.setItem('access_token', result.access_token); 
           localStorage.setItem('user', JSON.stringify(result.user)); 
           setSuccessMessage('Login successful! You can now log in.'); 
+  
           setUsername('');
        
           setPassword('');
@@ -154,7 +156,3 @@ const LoginComponent: React.FC<LoginComponentProps> =({onLoginSuccess}) => {
 };
 
 export default LoginComponent;
-
-function setSuccessMessage(arg0: string) {
-  throw new Error('Function not implemented.');
-}
