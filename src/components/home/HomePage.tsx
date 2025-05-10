@@ -48,15 +48,15 @@ const HomePage = () => {
             <div className="slider-container">
                 <div className="slider">
                     <div className="slide active">
-                        <img src="src/assets/images/slide1.jpg" alt="Slide 1" />
+                        <img src="../src/assets/images/slide1.jpg" alt="Slide 1" />
                         <p>Low-interest loans tailored for you</p>
                     </div>
                     <div className="slide">
-                        <img src="src/assets/images/slide2.png" alt="Slide 2" />
+                        <img src="../src/assets/images/slide2.png" alt="Slide 2" />
                         <p>Fast and easy application process</p>
                     </div>
                     <div className="slide">
-                        <img src="src/assets/images/slide3.jpg" alt="Slide 3" />
+                        <img src="../src/assets/images/slide3.jpg" alt="Slide 3" />
                         <p>Flexible repayment options</p>
                     </div>
                 </div>
