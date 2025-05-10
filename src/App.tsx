@@ -10,6 +10,7 @@ import UserBankAccounts from './components/bank/UserBankAccounts';
 import DocumentUpload from './components/document/DocumentUpload';
 import { User } from './interface/interfaces';
 import AboutPage from './components/about/AboutPage';
+import HomePage from './components/home/HomePage';
 
 
 
@@ -96,19 +97,18 @@ function App() {
             <li><Link to="/" onClick={closeMenu}>Home</Link></li>
             <li><Link to="/about" onClick={closeMenu}>About Us</Link></li>
             <li><Link to="/bank" onClick={closeMenu}>Bank</Link></li>
-            <li><Link to="/document" onClick={closeMenu}>document</Link></li>
+            {/* <li><Link to="/document" onClick={closeMenu}>document</Link></li> */}
             {/* Only show Dashboard link if user is logged in */}
-            <li><Link to="/dashboard"
-            
-            
-            onClick={closeMenu}>Dashboard</Link></li>
+            <li><Link to="/dashboard" onClick={closeMenu}>Dashboard</Link></li>
+            <li><Link to="/login" onClick={closeMenu}>My Account</Link></li>
             <li><Link to="/contact" onClick={closeMenu}>Contact</Link></li>
           </ul>
         </nav>
 
         <main className="main-content">
           <Routes>
-            <Route path="/" element={<LoginComponent onLoginSuccess={handleLoginSuccess} />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/login" element={<LoginComponent onLoginSuccess={handleLoginSuccess} />} />
             <Route path="/register" element={<RegisterComponent />} />
             <Route
               path="/dashboard"
@@ -116,9 +116,7 @@ function App() {
             />
             <Route path="/about" element={<AboutPage/>} />
             <Route path="/bank" element={<UserBankAccounts />} />
-            <Route path="/document" element={<DocumentUpload userId={0} onUploadSuccess={function (): void {
-              throw new Error('Function not implemented.');
-            } } />} />
+            <Route path="/document" element={<DocumentUpload userId={user ? user.id : 0} onUploadSuccess={() => console.log('Upload successful')} />} />
             <Route path="/contact" element={<h2>Contact Page</h2>} />
             <Route path="*" element={<h2>404 - Page Not Found</h2>} />
           </Routes>
