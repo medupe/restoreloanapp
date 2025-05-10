@@ -16,10 +16,10 @@
 /* === Navigation Bar Styles === */
 
 .app-nav {
-  background-color: #333;
+  background-color: #04112a;
   padding: 10px 20px; /* Add horizontal padding */
   /* margin-bottom: 20px; */ /* Remove bottom margin if main content handles spacing */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(13, 1, 21, 0.1);
   text-align: center;
   position: relative; /* Needed for absolute positioning of mobile menu */
   display: flex; /* Use flex to align items */

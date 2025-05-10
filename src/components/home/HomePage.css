@@ -131,19 +131,19 @@ body {
 
 .form-group input:focus,
 .form-group select:focus {
-    border-color: #007bff;
-    outline: none;
+  border-color: #04112a;
+  outline: none;
 }
 
 input[readonly] {
     background-color: #eee;
-    color: #555;
+    color: #1e1159;
 }
 
 button[type="submit"] {
     padding: 14px;
     font-size: 1rem;
-    background-color: #007bff;
+    background-color: #04112a;
     color: #fff;
     border: none;
     border-radius: 6px;
@@ -152,7 +152,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: #0056b3;
+    background-color: #04112a;
 }
 
 /* ------------------- RESPONSIVE ------------------- */

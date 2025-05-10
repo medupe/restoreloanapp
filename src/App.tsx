@@ -11,6 +11,7 @@ import DocumentUpload from './components/document/DocumentUpload';
 import HomePage from './components/home/HomePage';
 
 import { User } from './interface/interfaces';
+import AboutPage from './components/about/AboutPage';
 
 
 
@@ -92,7 +93,7 @@ const handleLoginSuccess = (userData:any) => {
               path="/dashboard"
               element={user ? <DashboardComponent userData={{user}} onLogout={handleLogout} /> : <h2>Please log in to view the dashboard.</h2>}
             />
-            <Route path="/about" element={<h2>About Page</h2>} />
+            <Route path="/about" element={<AboutPage/>} />
             <Route path="/bank" element={<UserBankAccounts />} />
             <Route path="/document" element={<DocumentUpload userId={0} onUploadSuccess={() => alert('Document uploaded successfully!')} />} />
             <Route path="/contact" element={<h2>Contact Page</h2>} />
@@ -100,8 +101,18 @@ const handleLoginSuccess = (userData:any) => {
             </Routes>
         </main>
 
-        <footer className="dashboard-footer">
-          <p>&copy; {new Date().getFullYear()} Restore Loans. All rights reserved.</p>
+        <footer
+          className="dashboard-footer"
+          style={{
+            backgroundImage: "url('/src/assets/images/footer_bg.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            color: "white",
+            padding: "1rem",
+            textAlign: "center",
+          }}
+        >
+          <p>&copy; {new Date().getFullYear()} Restore Loans. All rights reserved by <a href="https://RestoreLoans.com" target="_blank">RestoreLoans</a> </p>
         </footer>
       </Router>
     </>
