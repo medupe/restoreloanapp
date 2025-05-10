@@ -9,6 +9,7 @@ import DashboardComponent from './components/dashboard/DashboardComponent';
 import UserBankAccounts from './components/bank/UserBankAccounts';
 import DocumentUpload from './components/document/DocumentUpload';
 import { User } from './interface/interfaces';
+import AboutPage from './components/about/AboutPage';
 
 
 
@@ -113,7 +114,7 @@ function App() {
               path="/dashboard"
               element={user ? <DashboardComponent userData={{user}} onLogout={handleLogout} /> : <h2>Please log in to view the dashboard.</h2>}
             />
-            <Route path="/about" element={<h2>About Page</h2>} />
+            <Route path="/about" element={<AboutPage/>} />
             <Route path="/bank" element={<UserBankAccounts />} />
             <Route path="/document" element={<DocumentUpload userId={0} onUploadSuccess={function (): void {
               throw new Error('Function not implemented.');
@@ -123,9 +124,20 @@ function App() {
           </Routes>
         </main>
 
-        <footer className="dashboard-footer">
-        <p>&copy; {new Date().getFullYear()} Restore Loans. All rights reserved.</p>
-      </footer>
+
+        <footer
+          className="dashboard-footer"
+          style={{
+            backgroundImage: "url('/src/assets/images/footer_bg.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            color: "white",
+            padding: "1rem",
+            textAlign: "center",
+          }}
+        >
+          <p>&copy; {new Date().getFullYear()} Restore Loans. All rights reserved by <a href="https://RestoreLoans.com" target="_blank">RestoreLoans</a> </p>
+        </footer>
       </Router>
     </>
   );
