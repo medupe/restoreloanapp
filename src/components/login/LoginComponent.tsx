@@ -31,9 +31,8 @@ const LoginComponent: React.FC<LoginComponentProps> =({onLoginSuccess}) => {
       scope?: string;
       
       }>({});
-        const [successMessage, setSuccessMessage] = useState('');
-  const newErrors: typeof fieldErrors = {};
   const handleSubmit = async (e: FormEvent) => {
+    const newErrors: typeof fieldErrors = {};
 
     e.preventDefault();
     setIsLoading(true);
@@ -75,7 +74,7 @@ const LoginComponent: React.FC<LoginComponentProps> =({onLoginSuccess}) => {
           console.error('login success:', result.access_token);
           localStorage.setItem('access_token', result.access_token); 
           localStorage.setItem('user', JSON.stringify(result.user)); 
-          setSuccessMessage('Login successful! You can now log in.'); 
+         // setSuccessMessage('Login successful! You can now log in.'); 
   
           setUsername('');
        
@@ -156,3 +155,4 @@ const LoginComponent: React.FC<LoginComponentProps> =({onLoginSuccess}) => {
 };
 
 export default LoginComponent;
+
