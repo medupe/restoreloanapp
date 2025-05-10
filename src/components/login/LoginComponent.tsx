@@ -29,6 +29,9 @@ const LoginComponent: React.FC<LoginComponentProps> = ({ onLoginSuccess }) => {
         onLoginSuccess({ username });
         setUsername('');
         setPassword('');
+        // Optionally, you can use successMessage here if needed
+        const successMessage = 'Login successful!';
+        console.log(successMessage);
       } else {
         setError('Invalid credentials');
       }
