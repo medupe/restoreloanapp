@@ -11,6 +11,8 @@ import DocumentUpload from './components/document/DocumentUpload';
 import { User } from './interface/interfaces';
 import AboutPage from './components/about/AboutPage';
 import HomePage from './components/home/HomePage';
+import footerBgImage from '/src/assets/images/footer_bg.jpg'; 
+
 
 
 
@@ -126,7 +128,7 @@ function App() {
         <footer
           className="dashboard-footer"
           style={{
-            backgroundImage: "url('/src/assets/images/footer_bg.jpg')",
+            backgroundImage: `url(${footerBgImage})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             color: "white",
