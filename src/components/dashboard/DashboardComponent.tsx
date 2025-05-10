@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import ApplyLoanForm from '../loan/ApplyLoanForm';
 import StatementHistory from '../statement/StatementHistory';
 import MakePaymentForm from '../payment/MakePaymentForm'; // Make sure this path is correct
 import './DashboardComponent.css';
 import { User } from '../../interface/interfaces';
-
+import { useNavigate } from 'react-router-dom';
 // --- Mock Data for Statement History ---
 const mockStatements = [
   { id: 1, user_id: 1, loan_id: 101, statement_type: 'Monthly Statement - Mar 2024', file_path: '/statements/mar2024_101.pdf' },
@@ -26,17 +26,29 @@ interface DashboardComponentProps {
   onLogout: () => void;
 }
 
-const DashboardComponent: React.FC<DashboardComponentProps> = ({ userData, onLogout }) => {
+const DashboardComponent: React.FC<DashboardComponentProps> = () => {
+   const navigate = useNavigate();
+   const [user, setUser] = useState<User | null>(null);
+
+   useEffect(() => {
+     const userData = localStorage.getItem("user");
+     console.log("john doe");
+ 
+     if (!userData) {
+     navigate('/', );
+     }
+     else{
+
+       const parsedUser: User = JSON.parse(userData);
+       console.log(parsedUser.email);
+       setUser(parsedUser);
+     }
+   }, []);
   const [showApplyForm, setShowApplyForm] = useState(false);
   const [showStatementHistory, setShowStatementHistory] = useState(false);
   const [showMakePaymentForm, setShowMakePaymentForm] = useState(false);
-  // Example: State to hold the loan selected for payment
-  // const [selectedLoanId, setSelectedLoanId] = useState<string | null>(null);
-  // const [selectedLoanBalance, setSelectedLoanBalance] = useState<number | undefined>(undefined);
 
-  if (!userData) {
-    return <p>Loading user data...</p>;
-  }
+
 
   // --- Handlers for Apply Loan Form ---
   const handleApplicationSuccess = () => {
@@ -98,8 +110,8 @@ const DashboardComponent: React.FC<DashboardComponentProps> = ({ userData, onLog
       <h1>Dashboard</h1>
       <header className="dashboard-header">
          <div className="user-info">
-          <span>Welcome, {userData.user.first_name} {userData.user.last_name}!</span>
-          <button onClick={onLogout} className="logout-button">Logout</button>
+         <span>Welcome, {user == null ? ""  :user!.first_name} {user == null ? "" :user!.last_name}!</span>
+        {/*  <button onClick={onLogout} className="logout-button">Logout</button> */}
         </div>
       </header>
 
