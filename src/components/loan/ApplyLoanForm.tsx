@@ -52,7 +52,7 @@ const userData = localStorage.getItem("user");
 
     try {
     //  await new Promise(resolve => setTimeout(resolve, 1500));
-        const result = await addLoan(from);
+      await addLoan(from);
       console.log('Loan Application Successful!', applicationData);
       setSuccessMessage('Your loan application has been submitted successfully!');
       setLoanType('');
