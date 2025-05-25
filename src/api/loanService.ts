@@ -1,22 +1,33 @@
+import { ApiErrorResponse } from "../interface/interfaces";
 
   export interface LoanFormData {
     loan_type: string;
     loan_amount: number;
     interest_rate: number;
-    loan_term: string;
+    loan_term: number;
     monthly_installment: number;
     start_date: string;
     end_date: string;
     user_id: number;
   }
   export interface LoanSuccessResponse {
-    sucess: boolean;
+    loan_type: 'home' | 'auto' | 'personal' | string; // Adjust types as needed
+    loan_amount: number;
+    interest_rate: number;
+    loan_term: number;
+    monthly_installment: number;
+    start_date: string; // ISO 8601 format, e.g., "2025-05-22"
+    end_date: string;
+    id: number;
+    user_id: number;
+    status: 'active' | 'inactive' | 'closed' | string; // Extend based on known statuses
+    created_at: string; // ISO 8601 format with timezone
   
   }
 
     
-/*export const addLoan = async (data: LoanFormData): Promise<RegisterSuccessResponse> => {
-  const apiUrl = `${import.meta.env.REACT_APP_API_URL}/auth/register`;
+export const addLoan = async (data: LoanFormData): Promise<LoanSuccessResponse> => {
+  const apiUrl = `${import.meta.env.VITE_API_URL}/loans`;
   try {
       const response = await fetch(apiUrl, {
           method: 'POST',
@@ -29,7 +40,7 @@
 
       // Check if the response status code indicates success (2xx range)
       if (!response.ok) {
-          let errorMessage = `Registration failed: ${response.status} ${response.statusText}`; // Slightly clearer default message
+          let errorMessage = `loan failed: ${response.status} ${response.statusText}`; // Slightly clearer default message
           try {
               // Attempt to parse the error response body as JSON
               const errorData: ApiErrorResponse = await response.json();
@@ -47,7 +58,7 @@
       }
 
       // If response is OK, parse the success response body as JSON
-      const successData: RegisterSuccessResponse = await response.json();
+      const successData: LoanSuccessResponse = await response.json();
       return successData;
 
   } catch (error: any) {
@@ -62,4 +73,3 @@
       }
   }
 };
-*/

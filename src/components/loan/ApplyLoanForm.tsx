@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './ApplyLoanForm.css';
+import { addLoan, LoanFormData } from '../../api/loanService';
+import { User } from '../../interface/interfaces';
 
 interface ApplyLoanFormProps {
   onApplicationSuccess?: () => void;
@@ -31,10 +33,26 @@ const ApplyLoanForm: React.FC<ApplyLoanFormProps> = ({ onApplicationSuccess, onC
       loan_amount: parseFloat(loanAmount),
       loan_term: parseInt(loanTerm, 10),
     };
+    const currentDate = new Date(); // current date
+const expiryDate = new Date(currentDate); // clone current date
+expiryDate.setDate(expiryDate.getDate() + 36); 
+const userData = localStorage.getItem("user");
+       const parsedUser: User = JSON.parse(userData!);
+       const from: LoanFormData = {
+        loan_type: loanType,
+        loan_amount: parseFloat(loanAmount),
+        interest_rate: 0.1,
+        loan_term: Number(loanTerm),
+        monthly_installment: parseFloat(loanAmount),
+        start_date: currentDate.toISOString().slice(0, 10),
+        end_date: expiryDate.toISOString().slice(0, 10),
+
+        user_id:parsedUser!.id
+        };
 
     try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
-
+    //  await new Promise(resolve => setTimeout(resolve, 1500));
+        const result = await addLoan(from);
       console.log('Loan Application Successful!', applicationData);
       setSuccessMessage('Your loan application has been submitted successfully!');
       setLoanType('');
