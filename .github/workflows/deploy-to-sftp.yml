@@ -26,7 +26,7 @@ jobs:
         run: npm run build # Runs the 'build' script defined in your package.json
 
       - name: Deploy to SFTP
-        uses: wlixcc/sftp-deploy@v1.2.4 # *** THIS IS THE CORRECT SFTP ACTION ***
+        uses: wlixcc/sftp-deploy@v1.2.6 # *** THIS IS THE CORRECT SFTP ACTION ***
         with:
           server: ${{ secrets.SFTP_HOST }}
           username: ${{ secrets.SFTP_USERNAME }}
