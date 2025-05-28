@@ -337,6 +337,11 @@ const RegisterComponent: React.FC = () => {
         <button type="submit" className="login-button" disabled={isLoading}>
           {isLoading ? 'Registering...' : 'Register'} {/* Updated loading text */}
         </button>
+        {/* Navigation link to Login */}
+        <div className="form-group" style={{ textAlign: 'center', marginTop: '1rem' }}>
+          <span>Already have an account? </span>
+          <a href="/login" className="login-link">Back to Login</a>
+        </div>
       </form>
     </div>
     </>

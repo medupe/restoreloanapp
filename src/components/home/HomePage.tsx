@@ -14,10 +14,25 @@ const HomePage = () => {
 
     useEffect(() => {
         if (amount && duration) {
-            const a = parseFloat(amount);
-            const d = parseInt(duration, 10);
-            const interest = (a * 0.1 * d).toFixed(2);
-            setReturnAmount(interest);
+            const loanAmount = parseFloat(amount);
+            const days = parseInt(duration, 10);
+            const months = days / 30;
+
+            // 5% monthly interest
+            const monthlyInterest = 0.05;
+            const interest = loanAmount * monthlyInterest * months;
+
+            // Initiation fee: R165 + 10% of amount over R1,000
+            const initiationFee =
+                165 + (loanAmount > 1000 ? 0.1 * (loanAmount - 1000) : 0);
+
+            // Monthly service fee: R60 per month
+            const monthlyServiceFee = 60 * months;
+
+            const totalRepayment =
+                loanAmount + interest + initiationFee + monthlyServiceFee;
+
+            setReturnAmount(totalRepayment.toFixed(2));
         } else {
             setReturnAmount('');
         }
@@ -94,10 +109,7 @@ const HomePage = () => {
                             required
                         >
                             <option value="" disabled>Select Duration</option>
-                            <option value="7">1 Week</option>
-                            <option value="14">2 Weeks</option>
-                            <option value="21">3 Weeks</option>
-                            <option value="30">4 Weeks</option>
+                            <option value="30"> 1 Month</option>
                         </select>
                     </div>
 
