@@ -26,19 +26,25 @@ jobs:
         run: npm run build # Runs the 'build' script defined in your package.json
 
       - name: Deploy to SFTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.0 # The SFTP/FTP deployment action
+        uses: wlixcc/sftp-deploy@v1.2.4 # *** THIS IS THE CORRECT SFTP ACTION ***
         with:
           server: ${{ secrets.SFTP_HOST }}
           username: ${{ secrets.SFTP_USERNAME }}
           password: ${{ secrets.SFTP_PASSWORD }}
           port: ${{ secrets.SFTP_PORT }} # Optional: only if not default 22
-          protocol: sftp # Specify SFTP protocol
-          local-dir: ./dist/ # *** IMPORTANT: Change this to your actual build output directory ***
-          remote-dir: /public_html/ # The remote directory on your SFTP server
-          exclude: |
-            .git/
-            .github/
-            node_modules/ # Exclude node_modules from deployment as they're not needed on the server
-            *.log
-            .DS_Store
-          # delete: true # Uncomment with caution if you want to delete remote files not in local-dir
+          # No 'protocol' needed here, as it's an SFTP-specific action
+          local-path: './dist/*' # *** IMPORTANT: Specify your build output directory ***
+          remote-path: '/public_html/' # The remote directory on your SFTP server
+          # Optional: Exclude files/folders from upload (using .gitignore syntax)
+          # Make sure these are relative to local-path if you use wildcards for local-path
+          # For example, if local-path is './build/*', and you want to exclude build/node_modules
+          # then you'd exclude 'node_modules/' here.
+          # The 'exclude' parameter for wlixcc/sftp-deploy might behave slightly differently,
+          # so test this if you rely heavily on it. For simple static site builds,
+          # the build process often handles exclusion.
+          # exclude: |
+          #   node_modules/
+          #   *.log
+          #   .DS_Store
+          # Optional: Delete files on remote that are not present locally
+          # args: '-avz --delete' # Use rsync-like arguments if needed for advanced sync
