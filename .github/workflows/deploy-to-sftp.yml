@@ -30,7 +30,7 @@ jobs:
         with:
           server: ${{ secrets.SFTP_HOST }}
           username: ${{ secrets.SFTP_USERNAME }}
-          #password: ${{ secrets.SFTP_PASSWORD }}
+        
           port: ${{ secrets.SFTP_PORT }} # Optional: only if not default 22
           # No 'protocol' needed here, as it's an SFTP-specific action
           local-path: './dist/*' # *** IMPORTANT: Specify your build output directory ***
