@@ -34,7 +34,7 @@ const ApplyLoanForm: React.FC<ApplyLoanFormProps> = ({ onApplicationSuccess, onC
     };
     const currentDate = new Date(); // current date
 const expiryDate = new Date(currentDate); // clone current date
-expiryDate.setDate(expiryDate.getDate() + 36); 
+expiryDate.setDate(expiryDate.getDate() + 24); 
 //const userData = localStorage.getItem("user");
    //    const parsedUser: User = JSON.parse(userData!);
   /*     const from: LoanFormData = {
