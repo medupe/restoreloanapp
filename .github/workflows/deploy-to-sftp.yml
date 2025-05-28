@@ -1,0 +1,44 @@
+name: Deploy to SFTP with Build
+
+on:
+  push:
+    branches:
+      - main # Trigger on push to the main branch
+  workflow_dispatch: # Allows manual triggering from the GitHub UI
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest # The type of runner that the job will run on
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4 # Action to check out your repository code
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4 # Use this action to install Node.js
+        with:
+          node-version: '18' # Specify your project's Node.js version (e.g., '14', '16', '18', '20')
+
+      - name: Install dependencies
+        run: npm install # Installs packages listed in package.json
+
+      - name: Build project
+        run: npm run build # Runs the 'build' script defined in your package.json
+
+      - name: Deploy to SFTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.0 # The SFTP/FTP deployment action
+        with:
+          server: ${{ secrets.SFTP_HOST }}
+          username: ${{ secrets.SFTP_USERNAME }}
+          password: ${{ secrets.SFTP_PASSWORD }}
+          port: ${{ secrets.SFTP_PORT }} # Optional: only if not default 22
+          protocol: sftp # Specify SFTP protocol
+          local-dir: ./dist/ # *** IMPORTANT: Change this to your actual build output directory ***
+          remote-dir: /public_html/ # The remote directory on your SFTP server
+          exclude: |
+            .git/
+            .github/
+            node_modules/ # Exclude node_modules from deployment as they're not needed on the server
+            *.log
+            .DS_Store
+          # delete: true # Uncomment with caution if you want to delete remote files not in local-dir
