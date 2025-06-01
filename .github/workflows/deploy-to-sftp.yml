@@ -1,50 +1,48 @@
-name: Deploy to SFTP with Build
+# .github/workflows/deploy.yml
+
+name: Deploy React App to Afrihost
 
 on:
   push:
     branches:
-      - main # Trigger on push to the main branch
-  workflow_dispatch: # Allows manual triggering from the GitHub UI
+      - main # This workflow will run whenever you push to the 'main' branch
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest # The type of runner that the job will run on
+    runs-on: ubuntu-latest # Use the latest Ubuntu runner provided by GitHub Actions
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4 # Action to check out your repository code
+      - name: Checkout code
+        uses: actions/checkout@v4 # Action to checkout your repository code
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4 # Use this action to install Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: '18' # Specify your project's Node.js version (e.g., '14', '16', '18', '20')
+          node-version: '20' # Specify the Node.js version your React app needs (e.g., '18', '20', '22')
 
       - name: Install dependencies
-        run: npm install # Installs packages listed in package.json
+        run: npm ci # 'npm ci' is preferred over 'npm install' in CI/CD environments for consistent builds
 
-      - name: Build project
-        run: npm run build # Runs the 'build' script defined in your package.json
+      - name: Build React App
+        run: npm run build # This command builds your React app for production, creating the 'build' folder
 
-      - name: Deploy to SFTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4 # *** THIS IS THE CORRECT SFTP ACTION ***
+      - name: Deploy to Afrihost via SFTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.0 
         with:
           server: ${{ secrets.SFTP_HOST }}
           username: ${{ secrets.SFTP_USERNAME }}
           password: ${{ secrets.SFTP_PASSWORD }}
           port: ${{ secrets.SFTP_PORT }} # Optional: only if not default 22
-          # No 'protocol' needed here, as it's an SFTP-specific action
-          local_path: /dist/ # *** IMPORTANT: Specify your build output directory ***
-          server-dir: / # The remote directory on your SFTP server
-          # Optional: Exclude files/folders from upload (using .gitignore syntax)
-          # Make sure these are relative to local-path if you use wildcards for local-path
-          # For example, if local-path is './build/*', and you want to exclude build/node_modules
-          # then you'd exclude 'node_modules/' here.
-          # The 'exclude' parameter for wlixcc/sftp-deploy might behave slightly differently,
-          # so test this if you rely heavily on it. For simple static site builds,
-          # the build process often handles exclusion.
-          # exclude: |
-          #   node_modules/
-          #   *.log
-          #   .DS_Store
-          # Optional: Delete files on remote that are not present locally
-          # args: '-avz --delete' # Use rsync-like arguments if needed for advanced sync
+          local-dir: ./build/ # The local directory containing your built React app files
+          remote-dir: /public_html/ # The remote directory on your Afrihost server
+          # The 'local-dir: ./build/' combined with 'remote-dir: /public_html/'
+          # means the *contents* of your local 'build' folder will be placed directly
+          # into the remote '/public_html/' folder. This ensures your index.html
+          # is accessible at your domain's root.
+          delete-remote: true # Optional: Deletes files on the remote server that are not in the local-dir.
+                              # Use with caution! This ensures a clean deployment but can remove
+                              # other files in public_html if they are not part of your build.
+                              # If you have other files in public_html that are NOT part of your build,
+                              # set this to `false` or manually manage them.
+          state-name: .ftp-deploy-state.json # Stores deployment state to optimize future deployments
+          log-level: verbose # Provides detailed logs for debugging
