@@ -34,7 +34,7 @@ jobs:
           port: ${{ secrets.SFTP_PORT }} # Optional: only if not default 22
           # No 'protocol' needed here, as it's an SFTP-specific action
           local_path: ./dist/* # *** IMPORTANT: Specify your build output directory ***
-          remote_path: /public_html/ # The remote directory on your SFTP server
+          server-dir: /public_html/ # The remote directory on your SFTP server
           # Optional: Exclude files/folders from upload (using .gitignore syntax)
           # Make sure these are relative to local-path if you use wildcards for local-path
           # For example, if local-path is './build/*', and you want to exclude build/node_modules
