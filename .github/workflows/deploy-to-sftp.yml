@@ -5,13 +5,27 @@ name: Deploy React App to Afrihost
 on:
   push:
     branches:
-      - release # This workflow will run whenever you push to the 'main' branch
+      - main # This workflow will run whenever you push to the 'main' branch
 
 jobs:
   deploy:
     runs-on: ubuntu-latest # Use the latest Ubuntu runner provided by GitHub Actions
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4 # Action to checkout your repository code
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Specify the Node.js version your React app needs (e.g., '18', '20', '22')
+
+      - name: Install dependencies
+        run: npm ci # 'npm ci' is preferred over 'npm install' in CI/CD environments for consistent builds
+
+      - name: Build React App
+        run: npm run build # This command builds your React app for production, creating the 'build' folder
+
       - name: Deploy to Afrihost via SFTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.0 
         with:
@@ -19,8 +33,8 @@ jobs:
           username: ${{ secrets.SFTP_USERNAME }}
           password: ${{ secrets.SFTP_PASSWORD }}
           port: ${{ secrets.SFTP_PORT }} # Optional: only if not default 22
-          local-dir: ./ # The local directory containing your built React app files
-          remote-dir: /api/ # The remote directory on your Afrihost server
+          local-dir: ./dist/ # The local directory containing your built React app files
+          remote-dir: /public_html/ # The remote directory on your Afrihost server
           # The 'local-dir: ./build/' combined with 'remote-dir: /public_html/'
           # means the *contents* of your local 'build' folder will be placed directly
           # into the remote '/public_html/' folder. This ensures your index.html
