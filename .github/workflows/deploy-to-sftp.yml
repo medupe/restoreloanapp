@@ -38,7 +38,7 @@ jobs:
           # The 'local-dir: ./build/' combined with 'remote-dir: /public_html/'
           # means the *contents* of your local 'build' folder will be placed directly
           # into the remote '/public_html/' folder. This ensures your index.html
-          # is accessible at your domain's root.
+          # is accessible at your domain's root
           delete-remote: true # Optional: Deletes files on the remote server that are not in the local-dir.
                               # Use with caution! This ensures a clean deployment but can remove
                               # other files in public_html if they are not part of your build.
